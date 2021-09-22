@@ -1,0 +1,5 @@
+location="east us"
+rg_name="rg1"
+storage_name="storageforndtest"
+storage_tier="Standard"
+storage_repl_type="LRS"
