@@ -15,9 +15,8 @@ on:
         description: "Candidate Name"
         required: false
         default: "Rajagopalan"
-env:
-  first_subscription: '1481c5b2-c916-495a-808c-b637d0196b40'
-  second_subscription: 'df5087c3-c311-4940-8091-7342c9346c4a'
+
+
 jobs:
   Provisionig:
     name: 'Create Infrastructure'
@@ -41,14 +40,12 @@ jobs:
     - name: Set Environment variables
       run: |
           if [[ ${{ github.event.inputs.subscriptionId }} == first  ]]; then
-            echo "ARM_SUBSCRIPTION_ID=$first_subscription" >> $GITHUB_ENV
-            echo $ARM_SUBSCRIPTION_ID
+            echo "ARM_SUBSCRIPTION_ID=${{ secrets.FIRST_SUBSCRIPTION }}" >> $GITHUB_ENV
+            echo "ARM_STORAGE_KEY=${{ secrets.ARM_STORAGEKEY }}" >> $GITHUB_ENV
           else
-            echo "ARM_SUBSCRIPTION_ID=$second_subscription" >> $GITHUB_ENV
+            echo "ARM_SUBSCRIPTION_ID=${{ secrets.SECOND_SUBSCRIPTION }}" >> $GITHUB_ENV
+            echo "ARM_STORAGE_KEY=${{ secrets.SECOND_STORAGE_KEY }}" >> $GITHUB_ENV
           fi
-    
-    - name: print env
-      run: echo $ARM_SUBSCRIPTION_ID
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
