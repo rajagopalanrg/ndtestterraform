@@ -15,8 +15,9 @@ on:
         description: "Candidate Name"
         required: false
         default: "Rajagopalan"
-
-
+env:
+  first_subscrption: '1481c5b2-c916-495a-808c-b637d0196b40'
+  second_subscription: 'df5087c3-c311-4940-8091-7342c9346c4a'
 jobs:
   Provisionig:
     name: 'Create Infrastructure'
@@ -26,7 +27,6 @@ jobs:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ github.event.inputs.subscriptionId }}
         ARM_STORAGE_KEY: ${{ secrets.ARM_STORAGEKEY }}
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -41,9 +41,9 @@ jobs:
     - name: Set Environment variables
       run: |
           if [[ ${{ github.event.inputs.subscriptionId }} == first  ]]; then
-            echo "ARM_SUBSCRIPTION_ID=${{ secrets.FIRST_SUBSCRIPTION }}" >> $GITHUB_ENV
+            echo "ARM_SUBSCRIPTION_ID=$first_subscription" >> $GITHUB_ENV
           else
-            echo "ARM_SUBSCRIPTION_ID=${{ secrets.SECOND_SUBSCRIPTION }}" >> $GITHUB_ENV
+            echo "ARM_SUBSCRIPTION_ID=$second_subscription" >> $GITHUB_ENV
           fi
     
     - name: print env
