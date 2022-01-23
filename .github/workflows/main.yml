@@ -5,8 +5,12 @@ on:
   workflow_dispatch:
     inputs:
       subscriptionId:
+        type: choice
         description: "Subscription ID"
         required: true
+        options:
+          - "first"
+          - "second"
       candidateName:
         description: "Candidate Name"
         required: false
@@ -14,15 +18,15 @@ on:
 
 
 jobs:
-  terraform:
-    name: 'Terraform'
+  Provisionig:
+    name: 'Create Infrastructure'
     runs-on: ubuntu-latest
     environment: production
     env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ github.event.inputs.subscriptionId}}
+        ARM_SUBSCRIPTION_ID: ${{ github.event.inputs.subscriptionId }}
         ARM_STORAGE_KEY: ${{ secrets.ARM_STORAGEKEY }}
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -33,6 +37,17 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
+
+    - name: Set Environment variables
+      run: |
+          if [[ ${{ github.event.inputs.subscriptionId }} == first  ]]; then
+            echo "ARM_SUBSCRIPTION_ID=${{ secrets.FIRST_SUBSCRIPTION }}" >> $GITHUB_ENV
+          else
+            echo "ARM_SUBSCRIPTION_ID=${{ secrets.SECOND_SUBSCRIPTION }}" >> $GITHUB_ENV
+          fi
+    
+    - name: print env
+      run: echo $ARM_SUBSCRIPTION_ID
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
@@ -45,4 +60,3 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -var-file=variables.tfvars
-
