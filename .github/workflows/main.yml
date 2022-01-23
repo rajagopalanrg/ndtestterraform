@@ -16,7 +16,7 @@ on:
         required: false
         default: "Rajagopalan"
 env:
-  first_subscrption: '1481c5b2-c916-495a-808c-b637d0196b40'
+  first_subscription: '1481c5b2-c916-495a-808c-b637d0196b40'
   second_subscription: 'df5087c3-c311-4940-8091-7342c9346c4a'
 jobs:
   Provisionig:
