@@ -47,12 +47,13 @@ jobs:
             echo "ARM_STORAGE_KEY=${{ secrets.ARM_STORAGEKEY }}" >> $GITHUB_ENV
             echo "STORAGE_ACCOUNT=$first_storage_account" >> $GITHUB_ENV
             echo "RG_NAME=$first_rg" >> $GITHUB_ENV
-          fi
-          if [[ ${{ github.event.inputs.subscriptionId }} == second  ]]; then
+          elif [[ ${{ github.event.inputs.subscriptionId }} == second  ]]; then
             echo "ARM_SUBSCRIPTION_ID=${{ secrets.SECOND_SUBSCRIPTION }}" >> $GITHUB_ENV
             echo "ARM_STORAGE_KEY=${{ secrets.SECOND_STORAGE_KEY }}" >> $GITHUB_ENV
             echo "STORAGE_ACCOUNT=$second_storage_account" >> $GITHUB_ENV
             echo "RG_NAME=$second_rg" >> $GITHUB_ENV
+          else
+            echo "you have chosen wrong subscription"
           fi
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
