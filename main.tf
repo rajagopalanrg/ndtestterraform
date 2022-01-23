@@ -3,7 +3,7 @@ variable "rg_name" {}
 variable "storage_name" {}
 variable "storage_tier" {}
 variable "storage_repl_type" {}
-variable "tfstatefilename" {}
+
 
 provider "azurerm" {
   
@@ -18,7 +18,7 @@ terraform {
     resource_group_name  = "learning"
     storage_account_name = "terraformstatefilend"
     container_name       = "statefiles"
-    key                  = var.tfstatefilename
+
   }
 }
 
