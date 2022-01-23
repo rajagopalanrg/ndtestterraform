@@ -42,6 +42,7 @@ jobs:
       run: |
           if [[ ${{ github.event.inputs.subscriptionId }} == first  ]]; then
             echo "ARM_SUBSCRIPTION_ID=$first_subscription" >> $GITHUB_ENV
+            echo $ARM_SUBSCRIPTION_ID
           else
             echo "ARM_SUBSCRIPTION_ID=$second_subscription" >> $GITHUB_ENV
           fi
